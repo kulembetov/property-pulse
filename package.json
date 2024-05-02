@@ -25,6 +25,8 @@
     ]
   },
   "dependencies": {
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.3",
     "next": "14.2.3",
     "prettier": "^3.2.5",
     "react": "^18",
