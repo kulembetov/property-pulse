@@ -1,15 +1,17 @@
 "use client";
-import { useParams } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { fetchProperty } from "@/utils/requests";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
-import Link from "next/link";
 import PropertyDetails from "@/components/PropertyDetails";
-import { FaArrowLeft } from "react-icons/fa";
+import PropertyImages from "@/components/PropertyImages";
 import Spinner from "@/components/Spinner";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PropertyPage = () => {
   const { id } = useParams();
+
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +22,7 @@ const PropertyPage = () => {
         const property = await fetchProperty(id);
         setProperty(property);
       } catch (error) {
-        console.log("Error fetching property:", error);
+        console.error("Error fetching property:", error);
       } finally {
         setLoading(false);
       }
@@ -33,9 +35,9 @@ const PropertyPage = () => {
 
   if (!property && !loading) {
     return (
-      <h2 className="text-center text-2xl font-bold mt-10">
-        Property not found
-      </h2>
+      <h1 className="text-center text-2xl font-bold mt-10">
+        Property Not Found
+      </h1>
     );
   }
 
@@ -51,16 +53,15 @@ const PropertyPage = () => {
                 href="/properties"
                 className="text-blue-500 hover:text-blue-600 flex items-center"
               >
-                <FaArrowLeft className="fas fa-arrow-left mr-2"></FaArrowLeft>{" "}
-                Back to Properties
+                <FaArrowLeft className="mr-2" /> Back to Properties
               </Link>
             </div>
           </section>
+
           <section className="bg-blue-50">
             <div className="container m-auto py-10 px-6">
               <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
                 <PropertyDetails property={property} />
-
                 <aside className="space-y-4">
                   <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
                     <i className="fas fa-bookmark mr-2"></i> Bookmark Property
@@ -69,7 +70,7 @@ const PropertyPage = () => {
                     <i className="fas fa-share mr-2"></i> Share Property
                   </button>
 
-                  {/* Contact Form */}
+                  {/* <!-- Contact Form --> */}
                   <div className="bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-xl font-bold mb-6">
                       Contact Property Manager
@@ -147,10 +148,10 @@ const PropertyPage = () => {
               </div>
             </div>
           </section>
+          <PropertyImages images={property.images} />
         </>
       )}
     </>
   );
 };
-
 export default PropertyPage;
