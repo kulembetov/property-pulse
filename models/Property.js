@@ -31,54 +31,54 @@ const PropertySchema = new Schema(
       zipcode: {
         type: String,
       },
-      beds: {
+    },
+    beds: {
+      type: Number,
+      required: true,
+    },
+    baths: {
+      type: Number,
+      required: true,
+    },
+    square_feet: {
+      type: Number,
+      required: true,
+    },
+    amenities: [
+      {
+        type: String,
+      },
+    ],
+    rates: {
+      nightly: {
         type: Number,
-        required: true,
       },
-      baths: {
+      weekly: {
         type: Number,
-        required: true,
       },
-      square_feet: {
+      monthly: {
         type: Number,
-        required: true,
       },
-      amenities: [
-        {
-          type: String,
-        },
-      ],
-      rates: {
-        nightly: {
-          type: Number,
-        },
-        weekly: {
-          type: Number,
-        },
-        monthly: {
-          type: Number,
-        },
+    },
+    seller_info: {
+      name: {
+        type: String,
       },
-      seller_info: {
-        name: {
-          type: String,
-        },
-        email: {
-          type: String,
-        },
-        phone: {
-          type: String,
-        },
+      email: {
+        type: String,
       },
-      images: [
-        {
-          type: String,
-        },
-      ],
-      is_featured: {
-        type: Boolean,
-        default: false,
+      phone: {
+        type: String,
       },
+    },
+    images: [
+      {
+        type: String,
+      },
+    ],
+    is_featured: {
+      type: Boolean,
+      default: false,
     },
   },
   {
