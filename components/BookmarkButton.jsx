@@ -62,7 +62,12 @@ const BookmarkButton = ({ property }) => {
     }
   };
 
-  if (loading) return <Spinner />;
+  if (loading)
+    return (
+      <p className="text-center text-xl font-medium">
+        You must be logged in to see the content
+      </p>
+    );
 
   return isBookmarked ? (
     <button
