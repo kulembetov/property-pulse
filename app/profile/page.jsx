@@ -54,7 +54,6 @@ const ProfilePage = () => {
       });
 
       if (res.status === 200) {
-        // Remove the property from state
         const updatedProperties = properties.filter(
           (property) => property._id !== propertyId
         );

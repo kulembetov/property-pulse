@@ -33,9 +33,7 @@ const PropertyMap = ({ property }) => {
           `${property.location.street} ${property.location.city} ${property.location.state} ${property.location.zipcode}`
         );
 
-        //  Check for results
         if (res.results.length === 0) {
-          // No results found
           setGeocodeError(true);
           setLoading(false);
           return;
@@ -64,7 +62,6 @@ const PropertyMap = ({ property }) => {
 
   if (loading) return <Spinner loading={loading} />;
 
-  // Handle case where geocoding failed
   if (geocodeError) {
     return <div className="text-xl">No location data found</div>;
   }

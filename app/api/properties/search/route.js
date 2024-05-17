@@ -12,7 +12,6 @@ export const GET = async (request) => {
 
     const locationPattern = new RegExp(location, 'i');
 
-    // Match location pattern against database fields
     let query = {
       $or: [
         { name: locationPattern },

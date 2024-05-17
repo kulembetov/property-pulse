@@ -27,7 +27,6 @@ export const DELETE = async (request, { params }) => {
 
     const sessionUser = await getSessionUser();
 
-    // Check for session
     if (!sessionUser || !sessionUser.userId) {
       return new Response('User ID is required', { status: 401 });
     }
@@ -40,7 +39,6 @@ export const DELETE = async (request, { params }) => {
 
     if (!property) return new Response('Property Not Found', { status: 404 });
 
-    // Verify ownership
     if (property.owner.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
     }
@@ -82,12 +80,10 @@ export const PUT = async (request, { params }) => {
       return new Response('Property does not exist', { status: 404 });
     }
 
-    // Verify ownership
     if (existingProperty.owner.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
     }
 
-    // Create propertyData object for database
     const propertyData = {
       type: formData.get('type'),
       name: formData.get('name'),
@@ -115,7 +111,6 @@ export const PUT = async (request, { params }) => {
       owner: userId,
     };
 
-    // Update property in database
     const updatedProperty = await Property.findByIdAndUpdate(id, propertyData);
 
     return new Response(JSON.stringify(updatedProperty), {

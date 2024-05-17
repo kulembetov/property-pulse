@@ -44,13 +44,11 @@ export const POST = async (request) => {
 
     const formData = await request.formData();
 
-    // Access all values from amenities and images
     const amenities = formData.getAll('amenities');
     const images = formData
       .getAll('images')
       .filter((image) => image.name !== '');
 
-    // Create propertyData object for database
     const propertyData = {
       type: formData.get('type'),
       name: formData.get('name'),
@@ -78,7 +76,6 @@ export const POST = async (request) => {
       owner: userId,
     };
 
-    // Upload image(s) to Cloudinary
     const imageUploadPromises = [];
 
     for (const image of images) {
@@ -86,10 +83,8 @@ export const POST = async (request) => {
       const imageArray = Array.from(new Uint8Array(imageBuffer));
       const imageData = Buffer.from(imageArray);
 
-      // Convert the image data to base64
       const imageBase64 = imageData.toString('base64');
 
-      // Make request to upload to Cloudinary
       const result = await cloudinary.uploader.upload(
         `data:image/png;base64,${imageBase64}`,
         {
@@ -99,9 +94,7 @@ export const POST = async (request) => {
 
       imageUploadPromises.push(result.secure_url);
 
-      // Wait for all images to upload
       const uploadedImages = await Promise.all(imageUploadPromises);
-      // Add uploaded images to the propertyData object
       propertyData.images = uploadedImages;
     }
 
@@ -111,10 +104,6 @@ export const POST = async (request) => {
     return Response.redirect(
       `${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`
     );
-
-    // return new Response(JSON.stringify({ message: 'Success' }), {
-    //   status: 200,
-    // });
   } catch (error) {
     return new Response('Failed to add property', { status: 500 });
   }

@@ -39,12 +39,10 @@ const PropertyEditForm = () => {
   useEffect(() => {
     setMounted(true);
 
-    // Fetch property data for form
     const fetchPropertyData = async () => {
       try {
         const propertyData = await fetchProperty(id);
 
-        // Check rates for null, if so then make empty string
         if (propertyData && propertyData.rates) {
           const defaultRates = { ...propertyData.rates };
           for (const rate in defaultRates) {
@@ -69,7 +67,6 @@ const PropertyEditForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Check if nested property
     if (name.includes(".")) {
       const [outerKey, innerKey] = name.split(".");
 
@@ -81,7 +78,6 @@ const PropertyEditForm = () => {
         },
       }));
     } else {
-      // Not nested
       setFields((prevFields) => ({
         ...prevFields,
         [name]: value,
@@ -91,14 +87,11 @@ const PropertyEditForm = () => {
   const handleAmenitiesChange = (e) => {
     const { value, checked } = e.target;
 
-    // Clone the current array
     const updatedAmenites = [...fields.amenities];
 
     if (checked) {
-      // Add value to array
       updatedAmenites.push(value);
     } else {
-      // Remove value from array
       const index = updatedAmenites.indexOf(value);
 
       if (index !== -1) {
@@ -106,7 +99,6 @@ const PropertyEditForm = () => {
       }
     }
 
-    // Update state with updated array
     setFields((prevFields) => ({
       ...prevFields,
       amenities: updatedAmenites,
