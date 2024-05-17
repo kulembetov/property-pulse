@@ -2,27 +2,25 @@ import connectDB from '@/config/database';
 import Property from '@/models/Property';
 import { getSessionUser } from '@/utils/getSessionUser';
 
-// GET (/api/properties/:id)
+// GET /api/properties/:id
 export const GET = async (request, { params }) => {
   try {
     await connectDB();
 
     const property = await Property.findById(params.id);
 
-    if (!property) {
-      return new Response('Property not found', { status: 404 });
-    }
+    if (!property) return new Response('Property Not Found', { status: 404 });
 
     return new Response(JSON.stringify(property), {
       status: 200,
     });
   } catch (error) {
     console.error(error);
-    return new Response('Something went wrong', { status: 500 });
+    return new Response('Something Went Wrong', { status: 500 });
   }
 };
 
-// DELETE (/api/properties/:id)
+// DELETE /api/properties/:id
 export const DELETE = async (request, { params }) => {
   try {
     const propertyId = params.id;
@@ -53,11 +51,12 @@ export const DELETE = async (request, { params }) => {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Something Went Wrong', { status: 500 });
   }
 };
 
+// PUT /api/properties/:id
 export const PUT = async (request, { params }) => {
   try {
     await connectDB();
@@ -73,18 +72,22 @@ export const PUT = async (request, { params }) => {
 
     const formData = await request.formData();
 
+    // Access all values from amenities
     const amenities = formData.getAll('amenities');
 
+    // Get property to update
     const existingProperty = await Property.findById(id);
 
     if (!existingProperty) {
       return new Response('Property does not exist', { status: 404 });
     }
 
+    // Verify ownership
     if (existingProperty.owner.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
     }
 
+    // Create propertyData object for database
     const propertyData = {
       type: formData.get('type'),
       name: formData.get('name'),
@@ -112,13 +115,14 @@ export const PUT = async (request, { params }) => {
       owner: userId,
     };
 
+    // Update property in database
     const updatedProperty = await Property.findByIdAndUpdate(id, propertyData);
 
     return new Response(JSON.stringify(updatedProperty), {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Failed to add property', { status: 500 });
   }
 };

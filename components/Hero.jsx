@@ -1,4 +1,4 @@
-import PropertySearchForm from "@/components/PropertySearchForm";
+import PropertySearchForm from "./PropertySearchForm";
 
 const Hero = () => {
   return (
@@ -17,5 +17,4 @@ const Hero = () => {
     </section>
   );
 };
-
 export default Hero;

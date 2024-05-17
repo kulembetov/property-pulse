@@ -11,10 +11,6 @@ const Properties = () => {
   const [pageSize, setPageSize] = useState(6);
   const [totalItems, setTotalItems] = useState(0);
 
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
-
   useEffect(() => {
     const fetchProperties = async () => {
       try {
@@ -30,7 +26,7 @@ const Properties = () => {
         setProperties(data.properties);
         setTotalItems(data.total);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -38,6 +34,10 @@ const Properties = () => {
 
     fetchProperties();
   }, [page, pageSize]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   return loading ? (
     <Spinner />
@@ -53,13 +53,13 @@ const Properties = () => {
             ))}
           </div>
         )}
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          onPageChange={handlePageChange}
+        />
       </div>
-      <Pagination
-        page={page}
-        pageSize={pageSize}
-        totalItems={totalItems}
-        onPageChange={handlePageChange}
-      />
     </section>
   );
 };

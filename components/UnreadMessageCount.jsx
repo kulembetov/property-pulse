@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useGlobalContext } from "@/context/GlobalContext";
 
 const UnreadMessageCount = ({ session }) => {
@@ -16,10 +16,11 @@ const UnreadMessageCount = ({ session }) => {
           const data = await res.json();
           setUnreadCount(data);
         }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
     };
+
     fetchUnreadMessages();
   }, [session]);
 
@@ -31,5 +32,4 @@ const UnreadMessageCount = ({ session }) => {
     )
   );
 };
-
 export default UnreadMessageCount;

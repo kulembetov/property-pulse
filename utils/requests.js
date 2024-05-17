@@ -19,7 +19,7 @@ async function fetchProperties({ showFeatured = false } = {}) {
 
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }
@@ -40,7 +40,7 @@ async function fetchProperty(id) {
 
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 }

@@ -1,11 +1,11 @@
 "use client";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import Spinner from "../../../components/Spinner";
-import PropertyCard from "../../../components/PropertyCard";
-import PropertySearchForm from "../../../components/PropertySearchForm";
+import PropertyCard from "@/components/PropertyCard";
+import Spinner from "@/components/Spinner";
+import PropertySearchForm from "@/components/PropertySearchForm";
 
 const SearchResultsPage = () => {
   const searchParams = useSearchParams();
@@ -22,14 +22,15 @@ const SearchResultsPage = () => {
         const res = await fetch(
           `/api/properties/search?location=${location}&propertyType=${propertyType}`
         );
+
         if (res.status === 200) {
           const data = await res.json();
           setProperties(data);
         } else {
           setProperties([]);
         }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -41,7 +42,7 @@ const SearchResultsPage = () => {
   return (
     <>
       <section className="bg-blue-700 py-4">
-        <div className="max-w-7xl max-auto px-4 flex flex-col items-start sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col items-start sm:px-6 lg:px-8">
           <PropertySearchForm />
         </div>
       </section>
@@ -54,7 +55,7 @@ const SearchResultsPage = () => {
               href="/properties"
               className="flex items-center text-blue-500 hover:underline mb-3"
             >
-              <FaArrowAltCircleLeft className="mr-2 mb-1" /> Back to properties
+              <FaArrowAltCircleLeft className="mr-2 mb-1" /> Back To Properties
             </Link>
             <h1 className="text-2xl mb-4">Search Results</h1>
             {properties.length === 0 ? (
@@ -69,9 +70,7 @@ const SearchResultsPage = () => {
           </div>
         </section>
       )}
-      ;
     </>
   );
 };
-
 export default SearchResultsPage;

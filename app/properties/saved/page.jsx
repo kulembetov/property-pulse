@@ -21,7 +21,7 @@ const SavedPropertiesPage = () => {
           toast.error("Failed to fetch saved properties");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toast.error("Failed to fetch saved properties");
       } finally {
         setLoading(false);

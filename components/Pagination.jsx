@@ -2,7 +2,7 @@ const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const handlePageChange = (newPage) => {
-    if (newPage >= totalPages <= totalPages) {
+    if (newPage >= 1 && newPage <= totalPages) {
       onPageChange(newPage);
     }
   };
@@ -29,5 +29,4 @@ const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
     </section>
   );
 };
-
 export default Pagination;

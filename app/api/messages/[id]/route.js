@@ -1,6 +1,6 @@
 import connectDB from '@/config/database';
-import { getSessionUser } from '@/utils/getSessionUser';
 import Message from '@/models/Message';
+import { getSessionUser } from '@/utils/getSessionUser';
 
 export const dynamic = 'force-dynamic';
 
@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic';
 export const PUT = async (request, { params }) => {
   try {
     await connectDB();
+
     const { id } = params;
 
     const sessionUser = await getSessionUser();
@@ -17,11 +18,12 @@ export const PUT = async (request, { params }) => {
         status: 401,
       });
     }
+
     const { userId } = sessionUser;
 
     const message = await Message.findById(id);
 
-    if (!message) return new Response('Message not found', { status: 404 });
+    if (!message) return new Response('Message Not Found', { status: 404 });
 
     if (message.recipient.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -32,8 +34,8 @@ export const PUT = async (request, { params }) => {
     await message.save();
 
     return new Response(JSON.stringify(message), { status: 200 });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };
@@ -42,6 +44,7 @@ export const PUT = async (request, { params }) => {
 export const DELETE = async (request, { params }) => {
   try {
     await connectDB();
+
     const { id } = params;
 
     const sessionUser = await getSessionUser();
@@ -51,11 +54,12 @@ export const DELETE = async (request, { params }) => {
         status: 401,
       });
     }
+
     const { userId } = sessionUser;
 
     const message = await Message.findById(id);
 
-    if (!message) return new Response('Message not found', { status: 404 });
+    if (!message) return new Response('Message Not Found', { status: 404 });
 
     if (message.recipient.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -63,9 +67,9 @@ export const DELETE = async (request, { params }) => {
 
     await message.deleteOne();
 
-    return new Response('Message has been deleted', { status: 200 });
-  } catch (e) {
-    console.error(e);
+    return new Response('Message Deleted', { status: 200 });
+  } catch (error) {
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };

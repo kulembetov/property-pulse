@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { FaBookmark } from "react-icons/fa";
-import Spinner from "@/components/Spinner";
 
 const BookmarkButton = ({ property }) => {
   const { data: session } = useSession();
@@ -13,7 +12,10 @@ const BookmarkButton = ({ property }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
 
     const checkBookmarkStatus = async () => {
       try {
@@ -22,18 +24,22 @@ const BookmarkButton = ({ property }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ propertyId: property._id }),
+          body: JSON.stringify({
+            propertyId: property._id,
+          }),
         });
+
         if (res.status === 200) {
           const data = await res.json();
           setIsBookmarked(data.isBookmarked);
         }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
     };
+
     checkBookmarkStatus();
   }, [property._id, userId]);
 
@@ -49,15 +55,18 @@ const BookmarkButton = ({ property }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ propertyId: property._id }),
+        body: JSON.stringify({
+          propertyId: property._id,
+        }),
       });
+
       if (res.status === 200) {
         const data = await res.json();
         toast.success(data.message);
         setIsBookmarked(data.isBookmarked);
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
@@ -71,21 +80,18 @@ const BookmarkButton = ({ property }) => {
 
   return isBookmarked ? (
     <button
-      className="bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
       onClick={handleClick}
+      className="bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
     >
-      <FaBookmark className="fas fa-bookmark mr-2" />
-      Remove Bookmark
+      <FaBookmark className="mr-2" /> Remove Bookmark
     </button>
   ) : (
     <button
-      className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
       onClick={handleClick}
+      className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
     >
-      <FaBookmark className="fas fa-bookmark mr-2" />
-      Bookmark Property
+      <FaBookmark className="mr-2" /> Bookmark Property
     </button>
   );
 };
-
 export default BookmarkButton;

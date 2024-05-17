@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "@/context/GlobalContext";
 
 const Message = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
   const [isDeleted, setIsDeleted] = useState(false);
+
   const { setUnreadCount } = useGlobalContext();
 
   const handleReadClick = async () => {
@@ -24,8 +25,8 @@ const Message = ({ message }) => {
           toast.success("Marked as new");
         }
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
@@ -39,15 +40,17 @@ const Message = ({ message }) => {
       if (res.status === 200) {
         setIsDeleted(true);
         setUnreadCount((prevCount) => prevCount - 1);
-        toast.success("Message has been deleted");
+        toast.success("Message Deleted");
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       toast.error("Message was not deleted");
     }
   };
 
-  if (isDeleted) return null;
+  if (isDeleted) {
+    return null;
+  }
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
@@ -85,14 +88,16 @@ const Message = ({ message }) => {
         </li>
       </ul>
       <button
-        className={`mt-4 mr-3 ${isRead ? "bg-gray-300" : "bg-blue-500 text-white"} py-1 px-3 rounded-md`}
         onClick={handleReadClick}
+        className={`mt-4 mr-3 ${
+          isRead ? "bg-gray-300" : "bg-blue-500 text-white"
+        } py-1 px-3 rounded-md`}
       >
-        {isRead ? "Mark as unread" : "Mark as read"}
+        {isRead ? "Mark As New" : "Mark As Read"}
       </button>
       <button
-        className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md"
         onClick={handleDeleteClick}
+        className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md"
       >
         Delete
       </button>

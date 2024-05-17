@@ -7,7 +7,7 @@ const PropertyHeaderImage = ({ image }) => {
         <div className="grid grid-cols-1">
           <Image
             src={image}
-            alt=""
+            alt="property header image"
             className="object-cover h-[400px] w-full"
             width={0}
             height={0}
@@ -19,5 +19,4 @@ const PropertyHeaderImage = ({ image }) => {
     </section>
   );
 };
-
 export default PropertyHeaderImage;

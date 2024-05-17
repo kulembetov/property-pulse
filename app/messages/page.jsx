@@ -1,7 +1,6 @@
-import Messages from "../../components/Messages";
+import Messages from "@/components/Messages";
 
 const MessagesPage = () => {
   return <Messages />;
 };
-
 export default MessagesPage;

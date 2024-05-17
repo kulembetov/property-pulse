@@ -36,7 +36,7 @@ export const GET = async () => {
 
     return new Response(JSON.stringify(messages), { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };
@@ -60,6 +60,7 @@ export const POST = async (request) => {
 
     const { user } = sessionUser;
 
+    // Can not send message to self
     if (user.id === recipient) {
       return new Response(
         JSON.stringify({ message: 'You can not send a message to yourself' }),
@@ -83,7 +84,7 @@ export const POST = async (request) => {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };

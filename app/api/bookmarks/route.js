@@ -24,12 +24,11 @@ export const GET = async () => {
 
     return new Response(JSON.stringify(bookmarks), { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };
 
-// POST /api/bookmarks
 export const POST = async (request) => {
   try {
     await connectDB();
@@ -66,7 +65,7 @@ export const POST = async (request) => {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response('Something went wrong', { status: 500 });
   }
 };

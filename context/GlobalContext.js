@@ -1,18 +1,26 @@
 'use client';
-
 import { createContext, useContext, useState } from 'react';
 
+// Create context
 const GlobalContext = createContext();
 
-export const GlobalProvider = ({ children }) => {
+// Create a provider
+export function GlobalProvider({ children }) {
   const [unreadCount, setUnreadCount] = useState(0);
+
   return (
-    <GlobalContext.Provider value={{ unreadCount, setUnreadCount }}>
+    <GlobalContext.Provider
+      value={{
+        unreadCount,
+        setUnreadCount,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );
-};
+}
 
-export const useGlobalContext = () => {
+// Create a custom hook to access context
+export function useGlobalContext() {
   return useContext(GlobalContext);
-};
+}

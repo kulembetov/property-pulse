@@ -6,11 +6,11 @@ import { fetchProperty } from "@/utils/requests";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import PropertyDetails from "@/components/PropertyDetails";
 import PropertyImages from "@/components/PropertyImages";
+import BookmarkButton from "@/components/BookmarkButton";
+import PropertyContactForm from "@/components/PropertyContactForm";
+import ShareButtons from "@/components/ShareButtons";
 import Spinner from "@/components/Spinner";
 import { FaArrowLeft } from "react-icons/fa";
-import BookmarkButton from "@/components/BookmarkButton";
-import ShareButtons from "@/components/ShareButtons";
-import PropertyContactForm from "@/components/PropertyContactForm";
 
 const PropertyPage = () => {
   const { id } = useParams();

@@ -25,7 +25,7 @@ const PropertyCard = ({ property }) => {
     <div className="rounded-xl shadow-md relative">
       <Image
         src={property.images[0]}
-        alt=""
+        alt="property image"
         height={0}
         width={0}
         sizes="100vw"
@@ -62,11 +62,13 @@ const PropertyCard = ({ property }) => {
               <FaMoneyBill className="inline mr-2" /> Nightly
             </p>
           )}
+
           {property.rates.weekly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> Weekly
             </p>
           )}
+
           {property.rates.monthly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> Monthly
@@ -81,7 +83,7 @@ const PropertyCard = ({ property }) => {
             <FaMapMarker className="text-orange-700 mt-1" />
             <span className="text-orange-700">
               {" "}
-              {property.location.city}, {property.location.state}{" "}
+              {property.location.city} {property.location.state}{" "}
             </span>
           </div>
           <Link

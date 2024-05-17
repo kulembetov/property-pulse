@@ -30,13 +30,12 @@ const ProfilePage = () => {
           setProperties(data);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
     };
 
-    // Fetch user properties when session is available
     if (session?.user?.id) {
       fetchUserProperties(session.user.id);
     }
@@ -46,6 +45,7 @@ const ProfilePage = () => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this property?"
     );
+
     if (!confirmed) return;
 
     try {
@@ -54,17 +54,19 @@ const ProfilePage = () => {
       });
 
       if (res.status === 200) {
+        // Remove the property from state
         const updatedProperties = properties.filter(
           (property) => property._id !== propertyId
         );
 
         setProperties(updatedProperties);
 
-        toast.success("Property deleted");
+        toast.success("Property Deleted");
       } else {
         toast.error("Failed to delete property");
       }
-    } catch (e) {
+    } catch (error) {
+      console.error(error);
       toast.error("Failed to delete property");
     }
   };
@@ -74,7 +76,7 @@ const ProfilePage = () => {
       <div className="container m-auto py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
           <h1 className="text-3xl font-bold mb-4">Your Profile</h1>
-          <div className="flex flex-col md:flex-row gap-1">
+          <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mx-20 mt-10">
               <div className="mb-4">
                 <Image
@@ -82,7 +84,7 @@ const ProfilePage = () => {
                   src={profileImage || profileDefault}
                   width={200}
                   height={200}
-                  alt="User"
+                  alt="user image"
                 />
               </div>
               <h2 className="text-xl mb-4">
@@ -107,7 +109,7 @@ const ProfilePage = () => {
                       <Image
                         className="h-32 w-full rounded-md object-cover"
                         src={property.images[0]}
-                        alt=""
+                        alt="property image"
                         width={500}
                         height={100}
                         priority={true}
